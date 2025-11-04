@@ -8,7 +8,6 @@
 </head>
 <body>
   <script type="module">
-
     import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js';
     import { STLLoader } from 'https://cdn.jsdelivr.net/npm/three@0.152.2/examples/jsm/loaders/STLLoader.js';
     import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.152.2/examples/jsm/controls/OrbitControls.js';
@@ -36,12 +35,15 @@
     const loader = new STLLoader();
     const material = new THREE.MeshStandardMaterial({ color: 0x606060, metalness: 0.5, roughness: 0.5 });
 
-    loader.load('model.stl', function (geometry) {
+    // CHANGE IS HERE: path updated to models/model.stl!
+    loader.load('models/model.stl', function (geometry) {
       const mesh = new THREE.Mesh(geometry, material);
       mesh.geometry.center(); // Center model
       scene.add(mesh);
     }, undefined, function (error) {
       console.error('Error loading STL file:', error);
+      // You may also show a visible message like:
+      document.body.insertAdjacentHTML('beforeend', '<div style="position:fixed;top:0;left:0;background:#fff;color:#900;padding:1em;z-index:99;">STL file not found at models/model.stl</div>');
     });
 
     window.addEventListener('resize', () => {
